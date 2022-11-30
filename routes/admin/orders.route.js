@@ -1,11 +1,10 @@
-import express from "express";
+const express = require("express");
 
 const router = express.Router();
 
-import OrdersController from "../../controllers/admin/orders_controller.js"
+const OrdersController = require("../../controllers/admin/orders_controller");
 
 router.get('/', OrdersController.index)
 router.get('/:id', OrdersController.show)
 
-
-export default router
+module.exports = router

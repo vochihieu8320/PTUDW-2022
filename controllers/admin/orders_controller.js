@@ -9,4 +9,4 @@ class OrdersController {
   }
 }
 
-export default new OrdersController
+module.exports = new OrdersController

@@ -8,4 +8,4 @@ class AdminLoginController {
   }
 }
 
-export default new AdminLoginController
+module.exports = new AdminLoginController

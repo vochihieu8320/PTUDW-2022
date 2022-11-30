@@ -4,4 +4,4 @@ class AboutUserController {
   }
 }
 
-export default new AboutUserController
+module.exports = new AboutUserController

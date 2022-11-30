@@ -1,11 +1,10 @@
-import express from "express";
+const express = require("express")
 
 const router = express.Router();
 
-import CategoriesController from "../../controllers/admin/categories_controller.js"
+const CategoriesController = require("../../controllers/admin/categories_controller")
 
 router.get('/', CategoriesController.index)
 router.get('/new', CategoriesController.new)
 
-
-export default router
+module.exports = router

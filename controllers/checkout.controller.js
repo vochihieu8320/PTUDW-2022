@@ -4,4 +4,4 @@ class CheckoutController {
   }
 }
 
-export default new CheckoutController
+module.exports = new CheckoutController

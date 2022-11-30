@@ -8,4 +8,4 @@ class ProductsController {
   }
 }
 
-export default new ProductsController
+module.exports = new ProductsController

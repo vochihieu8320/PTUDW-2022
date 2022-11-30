@@ -1,11 +1,10 @@
-import express from "express";
+const express = require("express")
 
 const router = express.Router();
 
-import SessionController from "../../controllers/admin/session_controller.js"
+const SessionController = require("../../controllers/admin/session_controller")
 
 router.get('/login', SessionController.login)
 router.get('/register', SessionController.register)
 
-
-export default router
+module.exports = router

@@ -1,11 +1,13 @@
-import HomeRouter from "./home.route.js"
-import ProductsRouter from "./products.route.js"
-import AboutUsRouter from "./about_us.route.js"
-import CheckoutRouter from "./checkout.route.js"
-import SessionRotuer from "./admin/session.route.js"
-import AdminCategoriesRouter from "./admin/categories.route.js"
-import AdminProductsRouter from "./admin/products.route.js"
-import AdminOrderRouter from "./admin/orders.route.js"
+const HomeRouter = require("./home.route")
+const ProductsRouter = require("./products.route")
+const AboutUsRouter = require("./about_us.route")
+const CheckoutRouter = require("./checkout.route")
+const SessionRotuer = require("./admin/session.route")
+const AdminCategoriesRouter = require("./admin/categories.route")
+const AdminProductsRouter = require("./admin/products.route")
+const AdminOrderRouter = require("./admin/orders.route")
+
+
 
 function route(app) {
   app.use("/", HomeRouter)
@@ -19,4 +21,4 @@ function route(app) {
   app.use("/admin/orders", AdminOrderRouter)
 }
 
-export default route
+module.exports = route

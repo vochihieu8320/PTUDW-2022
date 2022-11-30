@@ -8,4 +8,4 @@ class CategoriesController {
   }
 }
 
-export default new CategoriesController
+module.exports = new CategoriesController
