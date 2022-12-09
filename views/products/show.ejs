@@ -5,17 +5,16 @@
             <h6 class="card-subtitle">globe type chair for rest</h6>
             <div class="row">
                 <div class="col-lg-5 col-md-5 col-sm-6">
-                    <div class="white-box text-center"><img src="/images/product_01.jpg" class="img-responsive"></div>
+                    <div class="white-box text-center">
+                        <img src="<%= product.product_images[0].image %>" class="img-responsive w-100">
+                    </div>
                 </div>
                 <div class="col-lg-7 col-md-7 col-sm-6">
-                    <h4 class="box-title mt-5">Product description</h4>
-                    <p>Lorem Ipsum available,but the majority have suffered alteration in some form,by injected humour,or randomised words which don't look even slightly believable.but the majority have suffered alteration in some form,by injected humour</p>
+                    <h4 class="box-title mt-5"><%= product.name %></h4>
+                    <p><%= product.description %></p>
                     <h2 class="mt-5">
-                        $153<small class="text-success">(36%off)</small>
+                        <%= product.price %> VND
                     </h2>
-                    <button class="btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
-                        <i class="fa fa-shopping-cart"></i>
-                    </button>
                     <a href="/checkouts">
                         <button class="btn btn-primary btn-rounded">Buy Now</button>
                     </a>
@@ -95,6 +94,55 @@
                         </table>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="products">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="filters">
+                    <ul>
+                        <li class="active" data-filter="*">Related products</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="filters-content">
+                      <div class="row grid">
+                        <% related_products.forEach(function(related_product) { %>
+                            <div class="col-lg-4 col-md-4 all des">
+                                <div class="product-item">
+                                  <a href="/products/<%= related_product.id %>"><img src="<%= related_product.product_images[0].image %>" alt=""></a>
+                                  <div class="down-content">
+                                    <a href="#"><h4><%= related_product.name %></h4></a>
+                                    <h6><%= related_product.price %> VND</h6>
+                                    <p><%= related_product.description %></p>
+                                    <ul class="stars">
+                                      <li><i class="fa fa-star"></i></li>
+                                      <li><i class="fa fa-star"></i></li>
+                                      <li><i class="fa fa-star"></i></li>
+                                      <li><i class="fa fa-star"></i></li>
+                                      <li><i class="fa fa-star"></i></li>
+                                    </ul>
+                                    <span>Reviews (12)</span>
+                                  </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <ul class="pages">
+                    <li><a href="#">1</a></li>
+                    <li class="active"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                  </ul>
+                </div>
+              </div>
             </div>
         </div>
     </div>
