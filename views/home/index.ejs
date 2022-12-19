@@ -102,6 +102,43 @@
           </div>
         <% }); %>
       </div>
+
+      <div class="row justify-content-center">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+  
+            <% if (total != undefined ) { %>
+              <% if (current_page != undefined) { %>
+  
+                <% seach_name = query["q"] != undefined ?  query["q"] : "" %>
+                <% price = query["price"] != undefined ?  query["price"] : "" %>
+                <% created_at = query["created_at"] != undefined ?  query["created_at"] : "" %>
+  
+                <% query_params = `q=${seach_name}&price=${price}&created_at=${created_at}&` %>
+  
+                <% if (current_page == 1) { %>
+                  <li clas¬s="page-item"><a class="page-link" href="javascript:void(0)">Previous</a></li>
+                <% } else { %>
+  
+                  <li clas¬s="page-item"><a class="page-link" href="?<%= query_params %>offset=<%= current_page - 1 %>&limit=5">Previous</a></li>
+                <% } %>
+              <% } %>
+  
+              <% for(let i = 1; i <= total; i++) { %>
+                <li class="page-item"><a class="page-link" href="?<%= query_params %>offset=<%= i %>&limit=5"><%= i %></a></li>
+              <% } %>
+  
+              <% if (current_page != undefined) { %>
+                <% if (current_page >= total - 1) { %>
+                  <li clas¬s="page-item"><a class="page-link" href="javascript:void(0)">Next</a></li>
+                <% } else { %>
+                  <li clas¬s="page-item"><a class="page-link" href="?<%= query_params %>offset=<%= current_page + 1 %>&limit=5">Next</a></li>
+                <% } %>
+              <% } %>
+            <% } %>
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
 

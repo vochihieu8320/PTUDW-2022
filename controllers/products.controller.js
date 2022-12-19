@@ -8,10 +8,10 @@ class ProductsController {
     async index(req, res) {
       // res.render("products/index", { layout: './layouts/customers'})
       try {
-        const products = await Products.findAll({ include: ProductImages});
+        const products = await Products.findAll({ include: ProductImages, limit: 5 });
         res.json({products: products})
       } catch (error) {
-        
+
       }
     }
 
@@ -22,7 +22,7 @@ class ProductsController {
                                                                   id: { [Op.not]: product.id } },
                                                                   include: ProductImages,
                                                                   limit: 5 })
-                                                              
+
       // res.json({product: product, related_products: related_products})
 
       res.render("products/show", { layout: './layouts/customers', product: product, related_products: related_products })

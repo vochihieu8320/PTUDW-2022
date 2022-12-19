@@ -1,6 +1,15 @@
 <div id="content">
+
     <!-- Begin Page Content -->
     <div class="container-fluid">
+      <a href="/admin/logout" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Log out</a>
+
+      <% if (message != false) { %>
+        <div class="alert alert-primary mt-2" role="alert">
+          <%= message %>
+        </div>
+      <% } %>
+
       <!-- DataTales Example -->
       <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -152,5 +161,14 @@
       </div>
     </div>
     <!-- /.container-fluid -->
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul>
+    </nav>
   </div>
-  
