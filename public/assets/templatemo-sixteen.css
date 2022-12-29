@@ -646,7 +646,7 @@ footer .inner-content p a {
 	margin: 0px 2px;
 }
 
-.products ul.pages li a {
+.products ul.pages li button {
 	width: 44px;
 	height: 44px;
 	display: inline-block;
@@ -656,10 +656,12 @@ footer .inner-content p a {
 	font-weight: 700;
 	color: #121212;
 	transition: all .3s;
+	outline: none;
+	cursor: pointer;
 }
 
-.products ul.pages li a:hover,
-.products ul.pages li.active a {
+.products ul.pages li button:hover,
+.products ul.pages li.active button {
 	background-color: #f33f3f;
 	border-color: #f33f3f;
 	color: #fff;

@@ -10,6 +10,8 @@ const db = require("./model/index.js")
 
 const app = express()
 
+// import jquery and supply it with the new dom
+
 app.set('view engine', 'ejs');
 
 app.use(express.json());

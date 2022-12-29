@@ -6,7 +6,7 @@ const SessionRotuer = require("./admin/session.route")
 const AdminCategoriesRouter = require("./admin/categories.route")
 const AdminProductsRouter = require("./admin/products.route")
 const AdminOrderRouter = require("./admin/orders.route")
-
+const AjaxRouter = require("./ajax.route")
 
 
 function route(app) {
@@ -19,6 +19,8 @@ function route(app) {
   app.use("/admin/categories", AdminCategoriesRouter)
   app.use("/admin/products", AdminProductsRouter)
   app.use("/admin/orders", AdminOrderRouter)
+
+  app.use("/ajax", AjaxRouter)
 }
 
 module.exports = route

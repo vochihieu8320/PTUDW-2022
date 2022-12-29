@@ -1,5 +1,5 @@
   <link rel="stylesheet" href="/assets/home.css">
-  
+
   <!-- Banner Starts Here -->
   <div class="banner header-text">
     <div class="owl-banner owl-carousel">
@@ -26,61 +26,57 @@
   <!-- Banner Ends Here -->
 
   <div class="s008">
-    <form action="/" method="get">
-      <div class="inner-form">
-        <div class="basic-search">
+  <form>
+    <div class="inner-form">
+      <div class="basic-search">
+        <div class="input-field">
+          <input id="search" type="text" placeholder="Seach by name" name="q" />
+          <div class="icon-wrap">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+              <path d="M18.869 19.162l-5.943-6.484c1.339-1.401 2.075-3.233 2.075-5.178 0-2.003-0.78-3.887-2.197-5.303s-3.3-2.197-5.303-2.197-3.887 0.78-5.303 2.197-2.197 3.3-2.197 5.303 0.78 3.887 2.197 5.303 3.3 2.197 5.303 2.197c1.726 0 3.362-0.579 4.688-1.645l5.943 6.483c0.099 0.108 0.233 0.162 0.369 0.162 0.121 0 0.242-0.043 0.338-0.131 0.204-0.187 0.217-0.503 0.031-0.706zM1 7.5c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5-2.916 6.5-6.5 6.5-6.5-2.916-6.5-6.5z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="advance-search">
+        <span class="desc">Advanced Search</span>
+        <div class="row justify-content-center">
           <div class="input-field">
-            <input id="search" type="text" placeholder="Seach by name" name="q" />
-            <div class="icon-wrap">
-              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
-                <path d="M18.869 19.162l-5.943-6.484c1.339-1.401 2.075-3.233 2.075-5.178 0-2.003-0.78-3.887-2.197-5.303s-3.3-2.197-5.303-2.197-3.887 0.78-5.303 2.197-2.197 3.3-2.197 5.303 0.78 3.887 2.197 5.303 3.3 2.197 5.303 2.197c1.726 0 3.362-0.579 4.688-1.645l5.943 6.483c0.099 0.108 0.233 0.162 0.369 0.162 0.121 0 0.242-0.043 0.338-0.131 0.204-0.187 0.217-0.503 0.031-0.706zM1 7.5c0-3.584 2.916-6.5 6.5-6.5s6.5 2.916 6.5 6.5-2.916 6.5-6.5 6.5-6.5-2.916-6.5-6.5z"></path>
-              </svg>
+            <div class="input-select">
+              <select id="sort_price" name="price" style="height: 40px; width: 170px">
+                <option value="" disabled selected>Sort by Price</option>
+                  <option value="ASC">A -> Z</option>
+                  <option value="DESC">Z -> A</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-field">
+            <div class="input-select">
+              <select data-trigger="" id="sort_created_at" name="created_at" style="height: 40px; width: 170px">
+                <option value="" disabled selected >Sort by release date</option>
+                <option value="ASC">A -> Z</option>
+                <option value="DESC">Z -> A</option>
+              </select>
             </div>
           </div>
         </div>
-        <div class="advance-search">
-          <span class="desc">Advanced Search</span>
-          <div class="row justify-content-center">
-            <div class="input-field">
-              <div class="input-select">
-                <select name="price" style="height: 40px; width: 170px">
-                  <option value="" disabled selected>Sort by Price</option>
-                    <option value="ASC">A -> Z</option>
-                    <option value="DESC">Z -> A</option>
-                </select>
-              </div>
-            </div>
-            <div class="input-field">
-              <div class="input-select">
-                <select data-trigger="" name="created_at" style="height: 40px; width: 170px">
-                  <option value="" disabled selected >Sort by release date</option>
-                  <option value="ASC">A -> Z</option>
-                  <option value="DESC">Z -> A</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="row third">
-            <div class="input-field">
-              <div class="result-count">
-                <span>108 </span>results</div>
-              <div class="group-btn">
-                <button class="btn-delete" id="delete">Reset</button>
-                <button type="submit" class="btn-search">Search</button>
-              </div>
+        <div class="row third">
+          <div class="input-field">
+            <div class="result-count">
+              <span>108 </span>results</div>
+            <div class="group-btn">
+              <button class="btn-delete" id="delete">Reset</button>
+              <button type="button" class="btn-search">Search</button>
             </div>
           </div>
         </div>
       </div>
-    </form>
+    </div>
+  </form>
   </div>
   <div class="latest-products">
     <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="section-heading">
-          </div>
-        </div>
+      <div class="row" id="products">
         <% products.forEach(function(product){ %>
           <div class="col-md-4">
             <div class="product-item">
@@ -104,40 +100,29 @@
       </div>
 
       <div class="row justify-content-center">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination">
-  
-            <% if (total != undefined ) { %>
-              <% if (current_page != undefined) { %>
-  
-                <% seach_name = query["q"] != undefined ?  query["q"] : "" %>
-                <% price = query["price"] != undefined ?  query["price"] : "" %>
-                <% created_at = query["created_at"] != undefined ?  query["created_at"] : "" %>
-  
-                <% query_params = `q=${seach_name}&price=${price}&created_at=${created_at}&` %>
-  
-                <% if (current_page == 1) { %>
-                  <li clas¬s="page-item"><a class="page-link" href="javascript:void(0)">Previous</a></li>
-                <% } else { %>
-  
-                  <li clas¬s="page-item"><a class="page-link" href="?<%= query_params %>offset=<%= current_page - 1 %>&limit=5">Previous</a></li>
-                <% } %>
-              <% } %>
-  
-              <% for(let i = 1; i <= total; i++) { %>
-                <li class="page-item"><a class="page-link" href="?<%= query_params %>offset=<%= i %>&limit=5"><%= i %></a></li>
-              <% } %>
-  
-              <% if (current_page != undefined) { %>
-                <% if (current_page >= total - 1) { %>
-                  <li clas¬s="page-item"><a class="page-link" href="javascript:void(0)">Next</a></li>
-                <% } else { %>
-                  <li clas¬s="page-item"><a class="page-link" href="?<%= query_params %>offset=<%= current_page + 1 %>&limit=5">Next</a></li>
-                <% } %>
-              <% } %>
+        <div class="products col-md-12">
+          <ul class="pages">
+            <li>
+              <button class="js-change_page"  value="1">
+                First
+              </button>
+            </li>
+
+            <% for(let i = 1; i <= total; i++) { %>
+              <li class="<%= i == 1 ? 'active' : '' %>">
+                <button class="js-change_page" value="<%= i %>">
+                  <%= i %>
+                </button>
+              </li>
             <% } %>
+
+            <li>
+            <button class="js-change_page" value="<%= total %>">
+              Last
+            </button>
+            </li>
           </ul>
-        </nav>
+        </div>
       </div>
     </div>
   </div>
@@ -192,3 +177,114 @@
       </div>
     </div>
   </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+  <script>
+    $(() => {
+      $( ".js-change_page" ).click(function() {
+        let page = $(this).val().split(' ').join('');
+
+        $(".pages").find("li").removeClass("active")
+        $(this).parent().addClass("active")
+
+        let search_query = $("#search").val();
+        let price = $('#sort_price').find(":selected").val();
+        let created_at = $('#sort_created_at').find(":selected").val();
+
+        let query = { q: search_query, price, created_at: created_at, offset: page }
+
+        send_ajax_request(query)
+      })
+
+
+      $(".btn-search").click(function () {
+        let search_query = $("#search").val();
+        let price = $('#sort_price').find(":selected").val();
+        let created_at = $('#sort_created_at').find(":selected").val();
+
+        let query = {q: search_query, price, created_at: created_at}
+
+        send_ajax_request(query)
+      })
+
+
+      function send_ajax_request(query) {
+
+        $.ajax({
+          url:"/ajax/products",
+          method:"GET",
+          dataType : "JSON",
+          data: query,
+          success:function(data)
+          {
+            var html = '';
+
+            if(data["data"].length > 0)
+            {
+                for(var count = 0; count < data["data"].length; count++)
+                {
+                  html += `
+                    <div class="col-md-4">
+                      <div class="product-item">
+                        <a href="/products/${data['data'][count].id}">
+                          <img src="${data['data'][count].product_images[0].image}" alt="">
+                        </a>
+                        <div class="down-content">
+                          <a href="#"><h4>${data['data'][count].name}</h4></a>
+                          <h6>${data['data'][count].price}</h6>
+                          <p>${data['data'][count].description}</p>
+                          <ul class="stars">
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                          </ul>
+                          <span>Reviews (24)</span>
+                        </div>
+                      </div>
+                    </div>
+                    `;
+                }
+            }
+
+            $('#products').html(html);
+
+            add_paging(data["total"])
+          }
+        });
+      }
+
+      function add_paging(total) {
+        let paging_by_number = '';
+
+        for(let i = 1; i <= total; i++) {
+          paging_by_number += `
+            <li class="${i == 1 ? 'active' : '' }">
+              <button class="js-change_page" value="${i}">
+                ${i}
+              </button>
+            </li>
+            `;
+        }
+
+        html = `
+            <li>
+              <button class="js-change_page"  value="1">
+                First
+              </button>
+            </li>
+            ${paging_by_number}
+            <li>
+            <button class="js-change_page" value="<%= total %>">
+              Last
+            </button>
+            </li>
+          `
+
+          $('.pages').html(html);
+        }
+    })
+
+  </script>
