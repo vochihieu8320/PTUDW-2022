@@ -9,7 +9,7 @@
             <div class="text-center">
               <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
             </div>
-            <form class="user" action="/admin/register" method="post">
+            <form class="user" action="/register" method="post">
               <div class="form-group">
                 <input
                   type="email"
@@ -51,9 +51,9 @@
               </a>
             </form>
 
-            <% if (error != false) { %>
+            <% if (locals.message) { %>
               <div class="alert alert-danger mt-2" role="alert">
-                <%= error %>
+                <%= locals.message %>
               </div>
             <% } %>
             <hr />

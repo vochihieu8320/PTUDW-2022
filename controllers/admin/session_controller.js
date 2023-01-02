@@ -4,13 +4,14 @@ const UserProfiles = db.user_profiles
 
 const UserUserService = require("../../services/user_user.service.js");
 
+const PassportService = require("../../services/passport.service.js");
 class SessionController {
   async login(req, res) {
-    res.render("admin/login", { layout: "./layouts/admin", error: false })
+    res.render("admin/login", { layout: "./layouts/admin" })
   }
 
   async register(req, res) {
-    res.render("admin/register", { layout: "./layouts/admin", error: false })
+    res.render("admin/register", { layout: "./layouts/admin"  })
   }
 
   async register_create(req, res) {
@@ -21,30 +22,34 @@ class SessionController {
       }
 
       const hashpass = await UserUserService.hashpass(req.body.password);
-      await UserUsers.create({ email: req.body.email, encrypt_password: hashpass})
+      const user_users = await UserUsers.create({ email: req.body.email, encrypt_password: hashpass});
 
-      res.redirect("/admin/categories")
+      const user = { id: user_users.id }
+      req.login(user, (err) => {
+        if (err) { return next(err); }
+        return res.redirect('/admin/categories');
+      })
     } catch (error) {
       const message = "Login failure, please try again"
       res.render("admin/register", { layout: "./layouts/admin", error: message})
     }
   }
 
-  async create(req, res) {
-    try {
-      const user = await UserUsers.findOne({ where: { email: req.body.email } })
+  async create(res, req, next) {
+    // try {
+    //   const user = await UserUsers.findOne({ where: { email: req.body.email } })
 
-      console.log("user", user)
-      const validPass = await UserUserService.comparepass(req.body.password, user.encrypt_password);
-      if(!validPass) {
-        res.render("admin/login", { layout: "./layouts/admin", error: "Email or password mismatch"})
-      }
+    //   const validPass = await UserUserService.comparepass(req.body.password, user.encrypt_password);
+    //   if(!validPass) {
+        res.render("/login", { layout: "./layouts/admin", error: "Email or password mismatch"})
+    //   }
 
-      res.redirect("/admin/categories")
-    } catch (error) {
-      res.render("admin/login", { layout: "./layouts/admin", error: error.message})
+
+    //   res.redirect("/admin/categories")
+    // } catch (error) {
+    //   res.render("admin/login", { layout: "./layouts/admin", error: error.message})
+    // }
     }
-  }
 
   async logout(req, res) {
     res.redirect("/admin/login")

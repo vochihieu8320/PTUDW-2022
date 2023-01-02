@@ -7,9 +7,8 @@ class OrdersController {
     try {
       let orders= await Orders.findAll()
       res.json({orders: orders})
-     
     } catch (error) {
-      res.json({error: error}) 
+      res.json({error: error})
     }
   }
 
