@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       quantity: DataTypes.STRING,
       price: DataTypes.STRING,
       category_id: DataTypes.INTEGER,
+      available_size: DataTypes.STRING,
       createdAt: {
         field: 'created_at',
         type: DataTypes.DATE,
@@ -19,6 +20,6 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.DATE,
       },
     });
-  
+
     return Products;
   };

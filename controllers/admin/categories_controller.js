@@ -3,13 +3,17 @@ const handle_session = require("../../helpers/session.js")
 const db = require("../../model");
 
 const Category = db.categories
+
+const { Op } = require("sequelize");
+
 class CategoriesController {
   async index(req, res) {
     handle_session(req, "/admin/categories")
 
-    const categories = await Category.findAndCountAll({ where: Category, limit: 5 });
-
-    console.log(categories)
+    let categories = await Category.findAndCountAll({ where: { parent_category_id: null }, limit: 5 });
+    let child_categories = await Category.findAll({ where: { parent_category_id:
+                                                            { [Op.ne]: null } }})
+    // find child categories
 
     let total = 0;
 
@@ -17,10 +21,13 @@ class CategoriesController {
       total = categories.count / 5
     }
     else {
-      total = Math.round(categories.count / 5)
+      total = Math.round(categories.count / 5) + 1
     }
 
-    res.render("admin/categories/index", { layout: "./layouts/side_bar" , categories: categories.rows, total: total})
+    res.render("admin/categories/index", { layout: "./layouts/side_bar" ,
+                                           categories: categories.rows,
+                                           total: total,
+                                           child_categories: child_categories })
   }
 
   async new(req, res) {
@@ -30,6 +37,7 @@ class CategoriesController {
   async create(req, res) {
     const category_name = req.body.category_name
     const child_category = req.body.child_category_name
+
     try {
       const category = await Category.create({name: category_name});
 
@@ -40,7 +48,6 @@ class CategoriesController {
           child_category_attrs.push({ name: child_category[i], parent_category_id: category.id })
         }
 
-        console.log("child_category_attrs", child_category_attrs)
         await Category.bulkCreate(child_category_attrs);
       }
 

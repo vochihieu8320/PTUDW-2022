@@ -47,7 +47,24 @@
             </tr>
           </thead>
           <tbody>
-            
+            <% categories.forEach(category => { %>
+              <tr>
+                <td><%= category.id %></td>
+                <td><%= category.name %></td>
+                <td>
+                  <ul>
+                    <% for(let i = 0; i < child_categories.length; i++) { %>
+                      <% if(child_categories[i].parent_category_id == category.id) { %>
+                        <li><%= child_categories[i].name %></li>
+
+                      <% } %>
+                    <% } %>
+                  </ul>
+                </td>
+                <td><%= category.createdAt.toLocaleString('en-GB', { timeZone: 'UTC' }) %></td>
+                <td><%= category.updatedAt.toLocaleString('en-GB', { timeZone: 'UTC' }) %></td>
+              </tr>
+            <% }) %>
           </tbody>
         </table>
       </div>
@@ -59,21 +76,76 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
     <li class="page-item">
-      <button class="page-link js-pagination_product" value="1">Previous</button>
+      <button class="page-link js-pagination_category" value="1">Previous</button>
     </li>
 
     <% for(let i = 1 ; i <= total; i++) { %>
       <li class="page-item <%= i == 1 ? 'active' : '' %>">
-        <button class="page-link js-pagination_product" value="<%= i %>">
+        <button class="page-link js-pagination_category" value="<%= i %>">
           <%= i %>
         </button>
       </li>
     <% } %>
     <li class="page-item">
-      <button class="page-link js-pagination_product" value="<%= total %>">Next</button>
+      <button class="page-link js-pagination_category" value="<%= total %>">Next</button>
     </li>
   </ul>
 </nav>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+  $(() => {
+    $(".js-pagination_category").click(function() {
+      $(".pagination").find("li").removeClass("active")
+      $(this).parent().addClass("active");
+
+      const offset = $(this).val().split(' ').join('');
+
+      $.ajax({
+        type: "GET",
+        url: "/ajax/categories",
+        dataType: "JSON",
+        data: { offset: offset },
+        success: (data) => {
+          const categories = data["categories"];
+          const child_categories = data["child_categories"];
+
+          if(categories.length > 0) {
+            let html = ``
+
+            for(let i = 0; i < categories.length; i++) {
+              let child_categories_html = ``
+
+              for(let j = 0; j < child_categories.length; j++) {
+                if(child_categories[j].parent_category_id === categories[i].id) {
+                  child_categories_html += `
+                  <li>${child_categories[j].name}</li>
+                  `
+                }
+              }
+
+              html += `
+                <tr>
+                  <td>${categories[i].id}</td>
+                  <td>${categories[i].name}</td>
+                  <td>
+                    <ul>
+                      ${child_categories_html}
+                    </ul>
+                  </td>
+                  <td>${categories[i].createdAt.toLocaleString('en-GB', { timeZone: 'UTC' })}</td>
+                  <td>${categories[i].updatedAt.toLocaleString('en-GB', { timeZone: 'UTC' })}</td>
+                </tr>
+              `
+            }
+
+            $('#dataTable > tbody:last-child').html(html);
+          }
+        },
+        error: (error) => {
+        }
+      })
+    })
+  })
+</script>

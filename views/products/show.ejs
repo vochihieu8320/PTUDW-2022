@@ -15,8 +15,20 @@
                     <h2 class="mt-5">
                         <%= product.price %> VND
                     </h2>
+
+                    <span class="mt-5 d-block">
+                      COLOR: <p id="selected_color">Blue</p>
+                      <button type="button" class="btn btn-primary" value="blue"></button>
+                      <button type="button" class="btn btn-secondary" value="secondary"></button>
+                      <button type="button" class="btn btn-success"></button>
+                      <button type="button" class="btn btn-danger"></button>
+
+                    </span>
+
                     <a href="/checkouts">
-                        <button class="btn btn-primary btn-rounded">Buy Now</button>
+                        <button class="btn btn-primary btn-rounded mt-5">Buy Now</button>
+                        <button class="btn btn-primary btn-rounded mt-5 js-add_to_cart" value="<%= product.id %>">Add to cart</button>
+
                     </a>
                     <h3 class="box-title mt-5">Key Highlights</h3>
                     <ul class="list-unstyled">
@@ -147,3 +159,21 @@
         </div>
     </div>
 </div>
+
+<div class="cookiesContent d-none" id="cookiesPopup">
+  <button class="close">✖</button>
+  <img src="https://cdn-icons-png.flaticon.com/512/1047/1047711.png" alt="cookies-img" />
+  <p>We use cookies for improving user experience, analytics and marketing.</p>
+  <button class="accept">That's fine!</button>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+<script>
+  $(() => {
+    $(".js-add_to_cart").click(function() {
+      const product_id = $(this).val();
+
+
+    })
+  })
+</script>

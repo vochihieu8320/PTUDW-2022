@@ -12,8 +12,9 @@
       </div>
       <form class="form-horizontal mt-3">
         <!-- Text input-->
-        <div class="form-group">
-          <div class="col-md-4">
+        <div class="form-group d-flex justify-content-center">
+          <div class="col-md-8 d-flex">
+            <label class="col-md-2">Product Name<span style="color: red;">(*)</span></label>
             <input
               id="product_name"
               name="product_name"
@@ -26,8 +27,9 @@
         </div>
 
         <!-- Select Basic -->
-        <div class="form-group">
-          <div class="col-md-4">
+        <div class="form-group d-flex justify-content-center">
+          <div class="col-md-8 d-flex">
+            <label class="col-md-2">Category<span style="color: red;">(*)</span></label>
             <select
               id="product_category"
               name="product_categorie"
@@ -41,8 +43,9 @@
           </div>
         </div>
         <!-- Text input-->
-        <div class="form-group">
-          <div class="col-md-4">
+        <div class="form-group d-flex justify-content-center">
+          <div class="col-md-8 d-flex">
+            <label class="col-md-2">Quantity<span style="color: red;">(*)</span></label>
             <input
               id="product_quantity"
               name="product_quantity"
@@ -54,8 +57,9 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <div class="col-md-4">
+        <div class="form-group d-flex justify-content-center">
+          <div class="col-md-8 d-flex">
+            <label class="col-md-2">Price<span style="color: red;">(*)</span></label>
             <input
               id="product_price"
               name="product_price"
@@ -67,25 +71,51 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <div class="col-md-4">
-            <input
+        <div class="form-group d-flex justify-content-center">
+          <div class="col-md-8 d-flex">
+            <label class="col-md-2">Description<span style="color: red;">(*)</span></label>
+            <textarea
               id="product_description"
               name="product_description"
               placeholder="PRODUCT DESCRIPTION"
               class="form-control input-md"
               required
-              type="text"
-            />
+            >
+            </textarea>
           </div>
         </div>
 
+        <div class="form-group d-flex justify-content-center">
+          <div class="col-md-8 d-flex">
+            <label class="col-md-2 d-flex">Product size<span style="color: red;">(*)</span></label>
+
+            <input
+              id="product_available_size"
+              name="product_available_size"
+              placeholder="XL"
+              class="form-control input-md product_available_size"
+              type="text"
+            />
+
+            <button
+            id="add_available_size"
+            name="add_available_size"
+            class="btn btn-primary ml-2"
+            type="button"
+          >
+            Add avaiable size
+          </button>
+          </div>
+        </div>
+
+        <div class="row js-available-size justify-content-center">
+        </div>
 
         <!-- File Button -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="filebutton">Image</label
-          >
-          <div class="col-md-4">
+        <div class="form-group d-flex justify-content-center mt-3">
+          <div class="col-md-8 d-flex">
+            <label class="col-md-2 d-flex">Image<span style="color: red;">(*)</span></label>
+
             <input
               id="input-multi-files"
               name="input-multi-files"
@@ -95,22 +125,29 @@
             />
           </div>
         </div>
-        <div class="form-group">
-          <div class="col-md-12">
-            <div class="preview-images"></div>
+
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="preview-images">
+            </div>
           </div>
         </div>
 
         <!-- Button -->
-        <div class="form-group">
-          <div class="col-md-4">
+        <div class="row justify-content-center mt-5">
+          <div class="col-md-2">
             <button
               id="js-newProduct"
               name="singlebutton"
-              class="btn btn-primary"
+              class="btn btn-primary btn-lg btn-block"
               type="button"
               >
               Save
+            </button>
+          </div>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-light btn-lg btn-block">
+              <a href="/admin/products" style="text-decoration: none;">Cancel</a>
             </button>
           </div>
         </div>
@@ -123,6 +160,8 @@
 <script>
   $(() => {
     let formData = new FormData();
+
+    let available_size = []
 
     let imagesPreview = function(input, placeToInsertImagePreview) {
     if (input.files) {
@@ -140,19 +179,104 @@
     }
   };
 
+  $("#add_available_size").click(function() {
+    let html = `
+          <div class="col-md-7 d-flex mt-2">
+            <label class="col-md-2"></label>
+            <input
+              id="product_available_size"
+              name="product_available_size"
+              placeholder="XL"
+              class="form-control input-md product_available_size"
+              type="text"
+            />
+            <button
+            id="remove_available_size"
+            name="remove_available_size"
+            class="btn btn-danger ml-2 delete_available_size"
+            type="button">
+              Remove
+            </button>
+          </div>
+    `
+
+    available_size.push($("#product_available_size").val())
+    $(".js-available-size").append(html)
+  })
+
+  $(document).on("click", "[class*='delete_available_size']", function() {
+      $(this).parent().remove();
+    });
+
   $("#input-multi-files").on("change", function() {
     imagesPreview(this, "div.preview-images");
-    formData.append('files', $('input[type=file]')[0].files[0]);
 
+    let html = `
+                <div class="col-md-7 mt-2 d-flex">
+                  <label class="col-md-2"></label>
+                    <input
+                      id="product_image_name"
+                      name="image_name"
+                      placeholder="IMAGE NAME(DARK RED)"
+                      class="form-control input-md product_image_name"
+                      required
+                      type="text"
+                    />
+               </div>
+                <div class="col-md-7 mt-2 mb-2 d-flex">
+                  <label class="col-md-2"></label>
+                  <input
+                    id="product_image_hex_code"
+                    name="image_hex_code"
+                    placeholder="IMAGE HEX CODE(#ffff)"
+                    class="form-control input-md product_image_hex_code"
+                    required
+                    type="text"
+                  />
+                </div>
+                `
+
+    $(".preview-images").append(html)
+    formData.append('files', $('input[type=file]')[0].files[0]);
   });
 
     $('#js-newProduct').click(function() {
+      const product_available_size_selector = $(".product_available_size")
+
+      let product_available_size = []
+
+      for(let i = 0; i < product_available_size_selector.length; i++) {
+        product_available_size.push(product_available_size_selector.eq(i).val())
+      }
+
+      const product_image_hex_code_selector = $('.product_image_hex_code');
+
+      let product_image_hex_code = []
+
+      for(let i = 0; i < product_image_hex_code_selector.length; i++) {
+        product_image_hex_code.push(product_image_hex_code_selector.eq(i).val())
+      }
+
+      const product_image_name_selector = $('.product_image_name');
+
+      let product_image_name = []
+
+      for(let i = 0; i < product_image_hex_code_selector.length; i++) {
+        product_image_name.push(product_image_name_selector.eq(i).val())
+      }
+      console.log("product_image_name", product_image_name)
+      console.log("product_image_hex_code", product_image_hex_code)
+      console.log("product_available_size", product_available_size)
+
       let body = {
         name:  $("#product_name").val(),
         description:  $("#product_description").val(),
         category_id: $('#product_category').find(":selected").val(),
         quantity: $('#product_quantity').val(),
         price: $('#product_price').val(),
+        image_name: product_image_name,
+        image_hex_code: product_image_hex_code,
+        available_size: product_available_size
       }
 
       const success_message = $("#success_message");

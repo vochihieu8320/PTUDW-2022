@@ -52,6 +52,36 @@ class AjaxController {
       res.json({error: error.message})
     }
   }
+
+  async categories(req, res) {
+    let offset = 1
+
+    if (req.query.offset !== undefined && +offset.toString() == offset && +offset > 0) {
+      offset = (req.query.offset - 1) * 5
+    }
+
+    try {
+      let categories = await Categories.findAll({ where: { parent_category_id: null }, offset: offset ,limit: 5 });
+      let child_categories = await Categories.findAll({ where: { parent_category_id:
+        { [Op.ne]: null } }})
+
+      res.json({ categories: categories, child_categories: child_categories })
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+  async addToCart(req, res) {
+    try {
+      const product_id = req.query.product_id
+
+      const product = await Products.findByPk(product_id)
+      
+    } catch (error) {
+      
+    }
+  }
 }
 
 module.exports = new AjaxController

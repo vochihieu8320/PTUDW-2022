@@ -39,22 +39,38 @@ class ProductsController {
   async create(req, res) {
     try {
       console.log(".....Upload Product.....");
+
+      const available_size = req.body.available_size.join(",")
+      const product_images_name = req.body.image_name
+      const product_image_hex_code = req.body.image_hex_code
+
       let product_body = {
         name: req.body.name,
         description: req.body.description,
         category_id: req.body.category_id,
         quantity: req.body.quantity,
         price: req.body.price,
+        available_size: available_size,
       }
 
       const product_images = req.body.product_images
+
+      console.log("product_images", product_images)
+      console.log("product_images_name", product_images_name)
+      console.log("product_image_hex_code", product_image_hex_code)
 
       const product = await Products.create(product_body);
 
       let image_url = []
       for(let i = 0; i < product_images.length; i++) {
-        image_url.push({ image: product_images[i], product_id: product.id })
+        image_url.push({
+          image: product_images[i],
+          product_id: product.id,
+          name: product_images_name[i],
+          hex_code: product_image_hex_code[i]
+        })
       }
+
 
       await ProductImages.bulkCreate(image_url)
 

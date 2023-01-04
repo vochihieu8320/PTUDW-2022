@@ -5,10 +5,16 @@ const ProductImages = db.product_images
 
 const { Op } = require("sequelize");
 
+const uuid = require('uuid').v4;
+
+const bcrypt = require('bcrypt');
+
 class HomeController {
   async index(req, res) {
     let limit = 5
     let offset = 1
+
+    const genrate_uuid = await  bcrypt.hash(uuid(), 10);
 
     let options = { include: ProductImages, offset: offset, limit: limit }
 
@@ -23,6 +29,8 @@ class HomeController {
       else {
         total = Math.round(products.count / 5)
       }
+
+      res.cookie("user_id", genrate_uuid);
 
       res.render("home/index", { layout: './layouts/customers', products: products.rows,
                                                                 total: total,
