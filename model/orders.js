@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true
       },
+      user_id: DataTypes.INTEGER,
       createdAt: {
         field: 'created_at',
         type: DataTypes.DATE,

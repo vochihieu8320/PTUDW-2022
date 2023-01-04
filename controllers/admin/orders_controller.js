@@ -14,7 +14,9 @@ class OrdersController {
 
   async show(req, res) {
     res.render("admin/orders/show", { layout: "./layouts/side_bar" })
+  }
 
+  async create(req, res) {
   }
 }
 

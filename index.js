@@ -14,6 +14,9 @@ const db = require("./model/index.js")
 
 const flash = require('connect-flash');
 
+var cookies = require("cookie-parser");
+
+
 const app = express()
 
 // import jquery and supply it with the new dom
@@ -37,6 +40,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cookies());
 
 const port = process.env.PORT || 3000
 

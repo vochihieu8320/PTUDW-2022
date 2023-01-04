@@ -1,6 +1,7 @@
 const dbConfig = require("../resource/db.js");
 
 const Sequelize = require("sequelize");
+const { dlp_v2 } = require("googleapis");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER,  dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
@@ -25,6 +26,9 @@ db.product_images = require("./product_images.js")(sequelize, Sequelize);
 db.user_users = require("./user_users.js")(sequelize, Sequelize);
 db.user_profiles = require("./user_profiles")(sequelize, Sequelize);
 db.categories = require("./categories.js")(sequelize, Sequelize);
+db.users = require("./users.js")(sequelize, Sequelize);
+db.order_addresses = require("./order_addresses.js")(sequelize, Sequelize);
+db.order_details = require("./order_details.js")(sequelize, Sequelize);
 
 
 db.user_profiles.belongsTo(db.user_users, { foreignKey: "user_id" })
