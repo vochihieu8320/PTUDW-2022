@@ -2,6 +2,7 @@ const db = require('../model')
 
 const Products = db.products
 const ProductImages = db.product_images
+const Categories = db.categories
 
 const { Op } = require("sequelize");
 
@@ -17,7 +18,7 @@ class AjaxController {
       current_page = +req.query.offset
     }
 
-    let options = { where: [], include: ProductImages, order: [], offset: offset, limit: limit }
+    let options = { where: [], include: [ProductImages, Categories], order: [], offset: offset, limit: limit }
 
 
     if(req.query.price != undefined && req.query.price) {

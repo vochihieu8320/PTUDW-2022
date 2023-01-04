@@ -1,3 +1,152 @@
-<h5>Products</h5>
+<div id="content">
 
-<%- include('../../layouts/partials/table.ejs'), { path: path, path_detail: path_detail } %>
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <a href="/admin/logout" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Log out</a>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <form
+        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+      >
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control bg-light border-0 small"
+            placeholder="Search for..."
+            aria-label="Search"
+            aria-describedby="basic-addon2"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+                Search
+            </button>
+          </div>
+        </div>
+      </form>
+      <a href="/admin/products/new"><button class="ml-5 btn btn-primary">New</button></a>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Image</th>
+              <th>Quantity</th>
+              <th>Price per product</th>
+              <th>Created at</th>
+              <th>Updated at</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% products.forEach((product)=> {  %>
+              <tr>
+                <td><%= product.id %></td>
+                <td><%= product.name %></td>
+                <td><%= product.description %></td>
+                <td><%= product.category.name %></td>
+                <td>
+                  <img class="img-fluid" src="<%= product.product_images[0].image %>"></img>
+                </td>
+                <td>
+                  <%= product.quantity %>
+                </td>
+                <td>
+                  <%= product.price %>
+                </td>
+                <td><%= product.createdAt.toLocaleString('en-GB', { timeZone: 'UTC' }) %></td>
+                <td><%= product.updatedAt.toLocaleString('en-GB', { timeZone: 'UTC' }) %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <button class="page-link js-pagination_product" value="1">Previous</button>
+    </li>
+
+    <% for(let i = 1 ; i <= total; i++) { %>
+      <li class="page-item <%= i == 1 ? 'active' : '' %>">
+        <button class="page-link js-pagination_product" value="<%= i %>">
+          <%= i %>
+        </button>
+      </li>
+    <% } %>
+    <li class="page-item">
+      <button class="page-link js-pagination_product" value="<%= total %>">Next</button>
+    </li>
+  </ul>
+</nav>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+  $(() => {
+    $(".js-pagination_product").click(function() {
+      $(".pagination").find("li").removeClass("active")
+      $(this).parent().addClass("active");
+
+      const data = { offset: $(this).val().split(' ').join('') }
+
+      $.ajax({
+        url: "/ajax/products",
+        type: "GET",
+        dataType: "JSON",
+        data: data,
+        success: (data) => {
+          const products = data["data"];
+          let html = ``
+
+          for(var i = 0; i < data["data"].length; i++) {
+            let product_images = data["data"][i].product_images;
+
+            let img_url = product_images.length > 0 ? product_images[0].image : ""
+
+            html += `
+              <tr>
+                <td>${data["data"][i].id}</td>
+                <td>${data["data"][i].name}</td>
+                <td>${data["data"][i].description}</td>
+                <td>${data["data"][i].category.name}</td>
+                <td>
+                  <img class="img-fluid" src="${img_url}"></img>
+                </td>
+                <td>
+                  ${data["data"][i].quantity}
+                </td>
+                <td>
+                  ${data["data"][i].price}
+                </td>
+                <td>${data["data"][i].createdAt.toLocaleString('en-GB', { timeZone: 'UTC' })}</td>
+                <td>${data["data"][i].updatedAt.toLocaleString('en-GB', { timeZone: 'UTC' })}</td>
+              </tr>
+            `
+          }
+
+          $('#dataTable > tbody:last-child').html(html);
+
+        },
+        error: (error) => {
+
+        }
+      })
+    })
+  })
+</script>

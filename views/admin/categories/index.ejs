@@ -1,3 +1,79 @@
 <h5>Categories</h5>
 
-<%- include('../../layouts/partials/table.ejs'), { path: path, path_detail: path_detail } %>
+<div id="content">
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <a href="/admin/logout" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Log out</a>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <form
+        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+      >
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control bg-light border-0 small"
+            placeholder="Search for..."
+            aria-label="Search"
+            aria-describedby="basic-addon2"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+                Search
+            </button>
+          </div>
+        </div>
+      </form>
+      <a href="/admin/categories/new"><button class="ml-5 btn btn-primary">New</button></a>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Child Category</th>
+              <th>Created at</th>
+              <th>Updated at</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <button class="page-link js-pagination_product" value="1">Previous</button>
+    </li>
+
+    <% for(let i = 1 ; i <= total; i++) { %>
+      <li class="page-item <%= i == 1 ? 'active' : '' %>">
+        <button class="page-link js-pagination_product" value="<%= i %>">
+          <%= i %>
+        </button>
+      </li>
+    <% } %>
+    <li class="page-item">
+      <button class="page-link js-pagination_product" value="<%= total %>">Next</button>
+    </li>
+  </ul>
+</nav>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>

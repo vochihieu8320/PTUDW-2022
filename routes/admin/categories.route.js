@@ -7,4 +7,6 @@ const CategoriesController = require("../../controllers/admin/categories_control
 router.get('/', CategoriesController.index)
 router.get('/new', CategoriesController.new)
 
+router.post('/', CategoriesController.create)
+
 module.exports = router

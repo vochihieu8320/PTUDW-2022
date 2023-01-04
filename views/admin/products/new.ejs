@@ -5,6 +5,11 @@
       <div class="card-header py-3">
         <h5>Create Product</h5>
       </div>
+      <div class="alert alert-danger mt-2 d-none" role="alert" id="error_message">
+      </div>
+
+      <div class="alert alert-success mt-2 d-none" role="alert" id="success_message">
+      </div>
       <form class="form-horizontal mt-3">
         <!-- Text input-->
         <div class="form-group">
@@ -14,7 +19,7 @@
               name="product_name"
               placeholder="PRODUCT NAME"
               class="form-control input-md"
-              required=""
+              required
               type="text"
             />
           </div>
@@ -24,12 +29,14 @@
         <div class="form-group">
           <div class="col-md-4">
             <select
-              id="product_categorie"
+              id="product_category"
               name="product_categorie"
               class="form-control"
               selected="PRODUCT CATEGORY"
             >
-              <option>PRODUCT CATEGORY</option>
+              <% categories.forEach((category) => { %>
+                <option value="<%= category.id %>"><%= category.name %></option>
+              <% }) %>
             </select>
           </div>
         </div>
@@ -37,93 +44,72 @@
         <div class="form-group">
           <div class="col-md-4">
             <input
-              id="available_quantity"
-              name="available_quantity"
+              id="product_quantity"
+              name="product_quantity"
               placeholder="AVAILABLE QUANTITY"
               class="form-control input-md"
-              required=""
+              required
               type="text"
             />
           </div>
         </div>
 
-        <!-- Textarea -->
         <div class="form-group">
           <div class="col-md-4">
-            <textarea
-              class="form-control"
-              id="product_description"
-              placeholder="PRODUCT DESCRIPTION"
-              name="product_description"
-            ></textarea>
+            <input
+              id="product_price"
+              name="product_price"
+              placeholder="PRICE PER PRODUCT ($)"
+              class="form-control input-md"
+              required
+              type="text"
+            />
           </div>
         </div>
 
+        <div class="form-group">
+          <div class="col-md-4">
+            <input
+              id="product_description"
+              name="product_description"
+              placeholder="PRODUCT DESCRIPTION"
+              class="form-control input-md"
+              required
+              type="text"
+            />
+          </div>
+        </div>
+
+
         <!-- File Button -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="filebutton"
-            >main_image</label
+          <label class="col-md-4 control-label" for="filebutton">Image</label
           >
           <div class="col-md-4">
             <input
-              id="filebutton"
-              name="filebutton"
+              id="input-multi-files"
+              name="input-multi-files"
               class="input-file"
               type="file"
-            />
-          </div>
-        </div>
-        <!-- File Button -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="filebutton"
-            >auxiliary_images</label
-          >
-          <div class="col-md-4">
-            <input
-              id="filebutton"
-              name="filebutton"
-              class="input-file"
-              type="file"
+              multiple
             />
           </div>
         </div>
         <div class="form-group">
-          <label class="col-md-4 control-label" for="filebutton"
-            >auxiliary_images</label
-          >
-          <div class="col-md-4">
-            <input
-              id="filebutton"
-              name="filebutton"
-              class="input-file"
-              type="file"
-            />
+          <div class="col-md-12">
+            <div class="preview-images"></div>
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="filebutton"
-            >auxiliary_images</label
-          >
-          <div class="col-md-4">
-            <input
-              id="filebutton"
-              name="filebutton"
-              class="input-file"
-              type="file"
-            />
-          </div>
-        </div>
+
         <!-- Button -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="singlebutton"
-            >Single Button</label
-          >
           <div class="col-md-4">
             <button
-              id="singlebutton"
+              id="js-newProduct"
               name="singlebutton"
               class="btn btn-primary"
-            >
+              type="button"
+              >
               Save
             </button>
           </div>
@@ -132,3 +118,79 @@
     </div>
   </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+  $(() => {
+    let formData = new FormData();
+
+    let imagesPreview = function(input, placeToInsertImagePreview) {
+    if (input.files) {
+      let filesAmount = input.files.length;
+      for (i = 0; i < filesAmount; i++) {
+        let reader = new FileReader();
+        reader.onload = function(event) {
+          $($.parseHTML("<img>"))
+            .attr("src", event.target.result)
+            .addClass("img-fluid col-md-3")
+            .appendTo(placeToInsertImagePreview);
+        };
+        reader.readAsDataURL(input.files[i]);
+      }
+    }
+  };
+
+  $("#input-multi-files").on("change", function() {
+    imagesPreview(this, "div.preview-images");
+    formData.append('files', $('input[type=file]')[0].files[0]);
+
+  });
+
+    $('#js-newProduct').click(function() {
+      let body = {
+        name:  $("#product_name").val(),
+        description:  $("#product_description").val(),
+        category_id: $('#product_category').find(":selected").val(),
+        quantity: $('#product_quantity').val(),
+        price: $('#product_price').val(),
+      }
+
+      const success_message = $("#success_message");
+      success_message.addClass("d-block")
+      success_message.append("...Uploading image...")
+
+      $.ajax({
+        url: "/upload",
+        method: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+          success_message.html("Upload image success, uploading product....!");
+          body.product_images = data.urls
+
+          $.ajax({
+            url: "/admin/products",
+            method: "POST",
+            dataType : "JSON",
+            data: body,
+            success: function(data) {
+              success_message.html("Upload product success");
+            },
+            error: function(data) {
+              const error_message = $("#error_message");
+              error_message.addClass("d-block")
+              error_message.append("${data.error}")
+            }
+          })
+        },
+        error: function(data) {
+          const error_message = $("#error_message");
+          error_message.addClass("d-block")
+          error_message.append("${data.error}")
+        }
+      })
+
+    })
+  })
+</script>

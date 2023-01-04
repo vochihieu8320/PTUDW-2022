@@ -5,124 +5,36 @@
       <div class="card-header py-3">
         <h5>Create Category</h5>
       </div>
-      <form class="form-horizontal mt-3">
+      <form class="form-horizontal mt-3" action="/admin/categories" method="post">
         <!-- Text input-->
-        <div class="form-group">
-          <div class="col-md-4">
+        <div class="form-group" id="category">
+          <div class="col-md-4 d-flex">
             <input
-              id="product_name"
-              name="product_name"
-              placeholder="PRODUCT NAME"
+              id="category_name"
+              name="category_name"
+              placeholder="CATEGORY NAME"
               class="form-control input-md"
-              required=""
               type="text"
             />
-          </div>
-        </div>
 
-        <!-- Select Basic -->
-        <div class="form-group">
-          <div class="col-md-4">
-            <select
-              id="product_categorie"
-              name="product_categorie"
-              class="form-control"
-              selected="PRODUCT CATEGORY"
+            <button
+              id="child_category"
+              name="child_category"
+              class="btn btn-primary ml-2"
+              type="button"
             >
-              <option>PRODUCT CATEGORY</option>
-            </select>
-          </div>
-        </div>
-        <!-- Text input-->
-        <div class="form-group">
-          <div class="col-md-4">
-            <input
-              id="available_quantity"
-              name="available_quantity"
-              placeholder="AVAILABLE QUANTITY"
-              class="form-control input-md"
-              required=""
-              type="text"
-            />
+              Add child category
+            </button>
           </div>
         </div>
 
-        <!-- Textarea -->
-        <div class="form-group">
-          <div class="col-md-4">
-            <textarea
-              class="form-control"
-              id="product_description"
-              placeholder="PRODUCT DESCRIPTION"
-              name="product_description"
-            ></textarea>
-          </div>
-        </div>
-
-        <!-- File Button -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="filebutton"
-            >main_image</label
-          >
-          <div class="col-md-4">
-            <input
-              id="filebutton"
-              name="filebutton"
-              class="input-file"
-              type="file"
-            />
-          </div>
-        </div>
-        <!-- File Button -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="filebutton"
-            >auxiliary_images</label
-          >
-          <div class="col-md-4">
-            <input
-              id="filebutton"
-              name="filebutton"
-              class="input-file"
-              type="file"
-            />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="filebutton"
-            >auxiliary_images</label
-          >
-          <div class="col-md-4">
-            <input
-              id="filebutton"
-              name="filebutton"
-              class="input-file"
-              type="file"
-            />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="filebutton"
-            >auxiliary_images</label
-          >
-          <div class="col-md-4">
-            <input
-              id="filebutton"
-              name="filebutton"
-              class="input-file"
-              type="file"
-            />
-          </div>
-        </div>
         <!-- Button -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="singlebutton"
-            >Single Button</label
-          >
           <div class="col-md-4">
             <button
               id="singlebutton"
-              name="singlebutton"
               class="btn btn-primary"
+              type="submit"
             >
               Save
             </button>
@@ -132,3 +44,35 @@
     </div>
   </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+<script>
+  $(()=>{
+    $("#child_category").click(function(){
+      let html = `
+        <div class="col-md-4 d-flex mt-5">
+          <input
+            name="child_category_name"
+            placeholder="CATEGORY NAME"
+            class="form-control input-md"
+            type="text"
+          />
+
+          <button
+            name="delete_category"
+            class="btn btn-primary ml-2 delete_category"
+            type="button"
+          >
+            Delete
+          </button>
+        </div>`
+
+      $("#category").append(html);
+    })
+
+    $(document).on("click", "[class*='delete_category']", function() {
+      $(this).parent().remove();
+    } );
+  })
+</script>
