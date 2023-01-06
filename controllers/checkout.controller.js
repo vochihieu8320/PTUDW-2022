@@ -1,3 +1,4 @@
+const { renameSync } = require('fs');
 const db = require('../model');
 
 const User = db.users
@@ -11,10 +12,6 @@ class CheckoutController {
   }
 
   async create(req, res) {
-    console.log("body", req.body)
-
-    console.log("cookie", req.cookies)
-
     const user_body = {
       phone: req.body.phone,
       user_id: req.cookies.user_id
@@ -24,16 +21,15 @@ class CheckoutController {
       const user = await User.create(user_body);
 
       const user_order_body = {
-        user_id: 100,
+        user_id: user.id,
         status: 1
       }
 
       const order = await Order.create(user_order_body);
-
       const order_address_body = {
         full_address: req.body.address,
         city: req.body.city,
-        district: req.body.district,
+        district: req.body.discict,
         ward: req.body.ward
       }
 
@@ -43,6 +39,7 @@ class CheckoutController {
         order_id: order.id,
         product_id: req.body.product_id,
         address_id: order_address.id,
+        payment_id: req.body.payment,
         price: req.body.price,
         size: req.body.size,
         amount: req.body.amount,
@@ -50,10 +47,10 @@ class CheckoutController {
       }
       await OrderDetails.create(order_detail_body)
 
+      res.render("checkout/index", { layout: "./layouts/customers", message: "Order success" })
     } catch (error) {
       console.log(error)
     }
-    res.render("checkout/index", { layout: "./layouts/customers" })
   }
 }
 

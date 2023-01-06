@@ -177,4 +177,11 @@
       </div>
     </div>
   </form>
+
+  <% if (locals.message) { %>
+    <div class="alert alert-primary" role="alert">
+        <%= locals.message %>
+    </div>
+  <% } %>
+</div>
 </div>

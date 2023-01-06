@@ -54,11 +54,6 @@ class ProductsController {
       }
 
       const product_images = req.body.product_images
-
-      console.log("product_images", product_images)
-      console.log("product_images_name", product_images_name)
-      console.log("product_image_hex_code", product_image_hex_code)
-
       const product = await Products.create(product_body);
 
       let image_url = []

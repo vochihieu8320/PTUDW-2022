@@ -100,7 +100,7 @@
 <script>
   $(() => {
     $(".js-pagination_product").click(function() {
-      $(".pagination").find("li").removeClass("active")
+      $(".pages").find("li").removeClass("active")
       $(this).parent().addClass("active");
 
       const data = { offset: $(this).val().split(' ').join('') }

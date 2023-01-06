@@ -1,12 +1,26 @@
 const db = require('../../model')
 const Orders = db.orders
-
+const OrderDetails = db.order_details
 class OrdersController {
   async index(req, res) {
-    // res.render("admin/orders/index", { layout: "./layouts/side_bar", path: false, path_detail: "/admin/orders/1" })
     try {
-      let orders= await Orders.findAll()
-      res.json({orders: orders})
+      const orders = await Orders.findAndCountAll({ limit: 5 });
+
+      let total = 0;
+
+      if(orders.count % 5 == 0) {
+        total = orders.count / 5
+      }
+      else {
+        total = Math.round(orders.count / 5)
+      }
+
+      res.render("admin/orders/index",
+        {
+          layout: "./layouts/side_bar",
+          orders: orders.rows,
+          total: total
+        })
     } catch (error) {
       res.json({error: error})
     }

@@ -8,6 +8,14 @@
                     <div class="white-box text-center">
                         <img src="<%= product.product_images[0].image %>" class="img-responsive w-100">
                     </div>
+
+                    <div class="row">
+                      <% product.product_images.forEach(product => { %>
+                        <div class="col-md-4 white-box text-center">
+                          <img src="<%= product.image %>" class="img-responsive w-100">
+                        </div>
+                      <% }) %>
+                    </div>
                 </div>
                 <div class="col-lg-7 col-md-7 col-sm-6">
                     <h4 class="box-title mt-5"><%= product.name %></h4>
@@ -17,19 +25,48 @@
                     </h2>
 
                     <span class="mt-5 d-block">
-                      COLOR: <p id="selected_color">Blue</p>
-                      <button type="button" class="btn btn-primary" value="blue"></button>
-                      <button type="button" class="btn btn-secondary" value="secondary"></button>
-                      <button type="button" class="btn btn-success"></button>
-                      <button type="button" class="btn btn-danger"></button>
+                      COLOR:
+                        <select
+                        id="product_color"
+                        name="color"
+                        class="form-control"
 
+                        <% product.product_images.forEach(product => { %>
+                          <option value="<%= product.name %>"><%= product.name %></option>
+                        <% }) %>
+                      </select>
                     </span>
 
+                    <span class="mt-5 d-block">
+                      SIZE:
+                        <select
+                        id="product_size"
+                        name="size"
+                        class="form-control"
+
+                        <% product_size = product.available_size.split(",") %>
+
+                        <% for(let i = 0; i  < product_size.length; i++) { %>
+                          <option value="<%= product_size[i] %>"><%= product_size[i] %></option>
+                        <% } %>
+
+                      </select>
+                    </span>
+
+                    <input
+                    type="text"
+                    class="form-control bg-light border-0 small mt-5"
+                    placeholder="Amount"
+                    id="product_amount"
+                    aria-label="Search"
+                    aria-describedby="basic-addon2"
+                  />
                     <a href="/checkouts">
                         <button class="btn btn-primary btn-rounded mt-5">Buy Now</button>
-                        <button class="btn btn-primary btn-rounded mt-5 js-add_to_cart" value="<%= product.id %>">Add to cart</button>
-
                     </a>
+                    
+                    <button class="btn btn-primary btn-rounded mt-5 js-add_to_cart" value="<%= product.id %>">Add to cart</button>
+
                     <h3 class="box-title mt-5">Key Highlights</h3>
                     <ul class="list-unstyled">
                         <li><i class="fa fa-check text-success"></i>Sturdy structure</li>
@@ -172,6 +209,19 @@
   $(() => {
     $(".js-add_to_cart").click(function() {
       const product_id = $(this).val();
+      const size = $('#product_size').find(":selected").val();
+      const color = $('#product_color').find(":selected").val();
+      const amount = $("#product_amount").val();
+
+      $.ajax({
+        type: "POST",
+        url: "/ajax/add_to_cart",
+        data: { product_id: product_id, size: size, color: color, amount: amount },
+        success: function(data) {
+        },
+        error: function(data) {
+        }
+    })
 
 
     })

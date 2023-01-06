@@ -182,20 +182,24 @@
 
   <script>
     $(() => {
-      $( ".js-change_page" ).click(function() {
+
+      let currentPage= ''
+      $(document).on("click", "[class*='js-change_page']", function() {
         let page = $(this).val().split(' ').join('');
 
-        $(".pages").find("li").removeClass("active")
-        $(this).parent().addClass("active")
+          console.log("li active", $("li.active"))
+          $("li.active").removeClass("active")
 
-        let search_query = $("#search").val();
-        let price = $('#sort_price').find(":selected").val();
-        let created_at = $('#sort_created_at').find(":selected").val();
+          currentPage = $(this).val()
+          let search_query = $("#search").val();
+          let price = $('#sort_price').find(":selected").val();
+          let created_at = $('#sort_created_at').find(":selected").val();
 
-        let query = { q: search_query, price, created_at: created_at, offset: page }
+          let query = { q: search_query, price, created_at: created_at, offset: page }
 
-        send_ajax_request(query)
+          send_ajax_request(query)
       })
+
 
 
       $(".btn-search").click(function () {
@@ -204,6 +208,8 @@
         let created_at = $('#sort_created_at').find(":selected").val();
 
         let query = {q: search_query, price, created_at: created_at}
+        
+        console.log("query", query)
 
         send_ajax_request(query)
       })
@@ -261,7 +267,7 @@
 
         for(let i = 1; i <= total; i++) {
           paging_by_number += `
-            <li class="${i == 1 ? 'active' : '' }">
+            <li class="${i == currentPage ? 'active' : '' }">
               <button class="js-change_page" value="${i}">
                 ${i}
               </button>

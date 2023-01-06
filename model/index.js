@@ -38,4 +38,8 @@ db.products.belongsTo(db.categories, { foreignKey: 'category_id' })
 
 db.categories.belongsTo(db.categories, { foreignKey: "parent_category_id" })
 
+db.order_details.belongsTo(db.orders, { foreignKey: "order_id" })
+
+db.order_addresses.belongsTo(db.order_details, { foreignKey: "address_id" })
+
 module.exports = db;
